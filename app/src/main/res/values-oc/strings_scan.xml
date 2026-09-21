@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_ready">Adreçatz era camèra tath tiquet e hètz era fotografia.</string>
+    <string name="scan_results">Revisatz es articles detectadi, es prètzi e es equivaléncies abans de sauvar-les.</string>
+    <string name="scan_previous">Darrèra crompa: %1$s / %2$s</string>
+    <string name="scan_new">Sense cap crompa anteriora comparabla</string>
+    <string name="scan_up">↗ +%1$s / %2$s</string>
+    <string name="scan_down">↘ −%1$s / %2$s</string>
+    <string name="scan_equal">= %1$s / %2$s</string>
+    <string name="scan_historic">Referéncia deth 2003: %1$s / %2$s</string>
+    <string name="scan_no_match">Sense equivaléncia deth 2003 confirmada</string>
+    <string name="scan_detail">Veir era evolucion deth prètz</string>
+    <string name="scan_save">Sauvar era crompa</string>
+    <string name="scan_saved">Crompa sauv ada en dispositiu.</string>
+    <string name="scan_error">Non s’a pogut sauvar: %1$s</string>
+    <string name="scan_invalid">Revisatz eth nòm, eth prètz e era quantitat des articles.</string>
+    <string name="scan_summary">Equivaléncies: %1$d/%2$d · Aué: %3$s · 2003: %4$s · Tireta: %5$s</string>
+    <string name="scan_back">← Tornar tath tiquet</string>
+</resources>
