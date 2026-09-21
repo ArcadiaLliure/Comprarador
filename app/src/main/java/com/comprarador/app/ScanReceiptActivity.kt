@@ -357,7 +357,7 @@ class ScanReceiptActivity : ComponentActivity() {
 
     private fun fingerprint(purchases: List<PurchasedItem>): String {
         val payload = buildString {
-            append(ocrText.trim().replace(Regex("\\s+"), " ")))
+            append(ocrText.trim().replace(Regex("\\s+"), " "))
             for (item in purchases) {
                 append('\u001f').append(item.description.trim())
                 append('\u001f').append(item.currentMilli)
