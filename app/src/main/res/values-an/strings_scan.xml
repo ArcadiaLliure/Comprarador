@@ -9,11 +9,11 @@
     <string name="scan_equal">= %1$s / %2$s</string>
     <string name="scan_historic">Referencia de 2003: %1$s / %2$s</string>
     <string name="scan_no_match">Sin equivalencia de 2003 confirmada</string>
-    <string name="scan_detail">Veyer a evolución d'o preu</string>
+    <string name="scan_detail">Veyer a evolución d\'o preu</string>
     <string name="scan_save">Alzar a compra</string>
     <string name="scan_saved">Compra alzada en o dispositivo.</string>
-    <string name="scan_error">No s'ha puesto alzar: %1$s</string>
-    <string name="scan_invalid">Revise o nombre, o preu y a cantidat d'os articlos.</string>
+    <string name="scan_error">No s\'ha puesto alzar: %1$s</string>
+    <string name="scan_invalid">Revise o nombre, o preu y a cantidat d\'os articlos.</string>
     <string name="scan_summary">Equivalencias: %1$d/%2$d · Hue: %3$s · 2003: %4$s · Alcancía: %5$s</string>
     <string name="scan_back">← Tornar enta o tiquet</string>
 </resources>
