@@ -55,6 +55,7 @@ class ScanReceiptActivity : ComponentActivity() {
     private lateinit var summary: TextView
     private lateinit var saveButton: Button
     private lateinit var addButton: Button
+    private lateinit var rawButton: Button
     private var recognizedReceipt: ReceiptParseResult? = null
     private val rows = mutableListOf<ScanRow>()
     private val recognizer by lazy { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
@@ -176,7 +177,10 @@ class ScanReceiptActivity : ComponentActivity() {
             LinearLayout.LayoutParams(0, dp(52), 1f))
         body.addView(actions, margin(14))
         status = text(getString(R.string.scan_ready), 14f, muted)
-        body.addView(status, margin(14))
+        body.addView(status, margin(8))
+        rawButton = action(getString(R.string.scan_review_ocr), false) { reviewOcrText() }
+            .apply { visibility = View.GONE }
+        body.addView(rawButton, margin(12))
         results = column()
         body.addView(results, margin())
         addButton = action(getString(R.string.scan_add_item), false) {
@@ -214,14 +218,50 @@ class ScanReceiptActivity : ComponentActivity() {
         try {
             recognizer.process(InputImage.fromFilePath(this, uri))
                 .addOnSuccessListener { result ->
-                    ocrText = result.text
-                    val parsed = ReceiptParser.parseDetailed(ocrText)
+                    // ML Kit ordena blocs, no necessàriament les línies del tiquet.
+                    // Recuperem files de les coordenades de les línies, sense inferir dades.
+                    val segments = result.textBlocks.flatMap { it.lines }.mapNotNull { line ->
+                        line.boundingBox?.let { rect -> ReceiptTextSegment(
+                            line.text, rect.left, rect.top, rect.right, rect.bottom
+                        ) }
+                    }
+                    val geometric = ReceiptReadingOrder.reconstruct(segments)
+                    val (ordered, parsed) = ReceiptReadingOrder.select(result.text, geometric)
+                    ocrText = ordered
+                    rawButton.visibility = View.VISIBLE
                     showRows(parsed.lines, parsed)
                 }
                 .addOnFailureListener { e -> showMessage(getString(R.string.ocr_error, e.message.orEmpty())) }
         } catch (e: Exception) {
             showMessage(getString(R.string.image_error, e.message.orEmpty()))
         }
+    }
+
+    /** El text queda al dispositiu; només es copia si la persona ho decideix. */
+    private fun reviewOcrText() {
+        val editor = EditText(this).apply {
+            setText(ocrText)
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            minLines = 8
+            maxLines = 18
+            setPadding(dp(16), dp(12), dp(16), dp(12))
+        }
+        android.app.AlertDialog.Builder(this)
+            .setTitle(R.string.scan_review_ocr)
+            .setView(editor)
+            .setPositiveButton(R.string.scan_reparse) { _, _ ->
+                ocrText = editor.text.toString()
+                val parsed = ReceiptParser.parseDetailed(ocrText)
+                saved = false
+                showRows(parsed.lines, parsed)
+            }
+            .setNeutralButton(R.string.scan_copy_ocr) { _, _ ->
+                val clipboard = getSystemService(android.content.Context.CLIPBOARD_SERVICE)
+                    as android.content.ClipboardManager
+                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("OCR", editor.text))
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun showRows(items: List<ReceiptLine>, parsed: ReceiptParseResult) {
@@ -255,6 +295,9 @@ class ScanReceiptActivity : ComponentActivity() {
         val expectedTotal = receipt.declaredTotalMilli
         if (sum != null && expectedTotal != null && sum != expectedTotal) {
             warnings += getString(R.string.scan_total_warning, money(expectedTotal), money(sum))
+        }
+        if (expectedCount == null || expectedTotal == null) {
+            warnings += getString(R.string.scan_unverified)
         }
         status.text = when {
             warnings.isNotEmpty() -> warnings.joinToString("\n")
@@ -412,8 +455,24 @@ class ScanReceiptActivity : ComponentActivity() {
             .joinToString("") { "%02x".format(it.toInt() and 0xff) }
     }
 
-    private fun saveReceipt() {
+    private fun saveReceipt(confirmedIncomplete: Boolean = false) {
         if (saved || rows.isEmpty()) return
+        val receipt = recognizedReceipt
+        if (!confirmedIncomplete && receipt != null) {
+            val sum = runCatching { rows.fold(0L) { acc, row ->
+                Math.addExact(acc, ReceiptParser.moneyMilli(row.price.text.toString()))
+            } }.getOrNull()
+            if (receipt.declaredItemCount == null || receipt.declaredTotalMilli == null ||
+                receipt.declaredItemCount != rows.size || sum != receipt.declaredTotalMilli) {
+                android.app.AlertDialog.Builder(this)
+                    .setTitle(R.string.scan_incomplete_title)
+                    .setMessage(R.string.scan_incomplete_message)
+                    .setPositiveButton(R.string.scan_save_anyway) { _, _ -> saveReceipt(true) }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+                return
+            }
+        }
         val items = mutableListOf<PurchasedItem>()
         var currentAll = 0L
         var currentMatched = 0L
