@@ -14,30 +14,15 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Preparar el SDK neuronal PaddleOCR i incorporar els models locals
+      - name: Preparar els models neuronals locals de PaddleOCR
         shell: bash
         run: |
           set -euo pipefail
-          python tools/prepare_paddleocr.py --vendor
-          python tools/integrate_paddleocr.py
+          test -f ppocr-sdk/src/main/java/com/paddle/ocr/PaddleOCR.kt
           python tools/prepare_paddleocr.py --models
-          # Primera integració: versionem el codi Apache 2.0 amb la procedència;
-          # els pesos ONNX són assets de compilació i queden ignorats per Git.
-          if [[ "$GITHUB_EVENT_NAME" == 'push' && "$GITHUB_REF" == 'refs/heads/main' ]]; then
-            git add .gitignore build.gradle.kts settings.gradle.kts app/build.gradle.kts \
-              app/src/main/java/com/comprarador/app/ScanReceiptActivity.kt \
-              tests/test_purchase_history.py ppocr-sdk
-            if ! git diff --cached --quiet; then
-              git -c user.name='Arcàdia Lliure' -c user.email='Arcadialliure@outlook.com' \
-                commit -m 'Integrar SDK PaddleOCR per al reconeixement local'
-              git push origin HEAD:main
-            fi
-          fi
       - name: Normalitzar els catàlegs originals i executar les proves Python
         shell: bash
         run: |
