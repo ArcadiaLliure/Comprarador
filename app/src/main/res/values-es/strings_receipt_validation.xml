@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_add_item">＋ Añadir un artículo</string>
+    <string name="scan_count_warning">⚠️ El tique indica %1$d artículos, pero se han detectado %2$d. Revísalos y añade los que falten.</string>
+    <string name="scan_total_warning">⚠️ La suma de los artículos (%2$s) no coincide con el total del tique (%1$s). Revisa los importes, los pesos y los descuentos.</string>
+</resources>
