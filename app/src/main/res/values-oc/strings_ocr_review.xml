@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_review_ocr">Revisar eth tèxte reconeishut</string>
+    <string name="scan_reparse">Tornar a analisar</string>
+    <string name="scan_copy_ocr">Copiar eth tèxte</string>
+    <string name="scan_unverified">Non auem pogut verificar eth nombre de productes e eth totau deth tiquet. Revisatz toti es productes abans de sauvar.</string>
+    <string name="scan_incomplete_title">Tiquet non verificat</string>
+    <string name="scan_incomplete_message">Eth nombre de productes o eth totau non coïncidís damb eth tiquet, o non auem pogut liéger es donades. Verificatz que non manque cap de producte abans de sauvar.</string>
+    <string name="scan_save_anyway">Sauvar parièr</string>
+</resources>
