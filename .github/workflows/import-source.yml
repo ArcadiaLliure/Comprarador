@@ -16,17 +16,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Integrar la lectura geomètrica i la revisió OCR
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          set -euo pipefail
-          if ! grep -q 'private fun reviewOcrText()' app/src/main/java/com/comprarador/app/ScanReceiptActivity.kt; then
-            python tools/integrate_ocr_layout.py
-            git -c user.name='Arcàdia Lliure' -c user.email='Arcadialliure@outlook.com' add app/src/main/java/com/comprarador/app/ScanReceiptActivity.kt app/build.gradle.kts tests/test_purchase_history.py
-            git -c user.name='Arcàdia Lliure' -c user.email='Arcadialliure@outlook.com' commit -m 'Reconstruir les files OCR i impedir el desament inadvertit de tiquets incomplets'
-            git push origin HEAD:main
-          fi
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
