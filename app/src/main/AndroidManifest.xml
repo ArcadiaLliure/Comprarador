@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScanReceiptActivity" android:exported="false" />
         <activity android:name=".TopPurchasesActivity" android:exported="false" />
         <activity android:name=".MainActivity" android:exported="false"
             android:screenOrientation="unspecified" />
