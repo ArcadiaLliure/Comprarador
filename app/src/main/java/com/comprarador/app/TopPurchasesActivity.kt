@@ -90,7 +90,7 @@ class TopPurchasesActivity : ComponentActivity() {
     private fun date(ms: Long) = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(Date(ms))
 
     private fun page(title: String, subtitle: String): LinearLayout {
-        root = vertical().apply { setBackgroundColor(background) }
+        root = vertical().apply { setBackgroundColor(this@TopPurchasesActivity.background) }
         val header = vertical().apply {
             background = GradientDrawable(GradientDrawable.Orientation.TL_BR,
                 intArrayOf(green, Color.rgb(21, 78, 68))).apply {
