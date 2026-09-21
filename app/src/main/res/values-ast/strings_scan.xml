@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_ready">Apunte al tique y faiga la semeya.</string>
+    <string name="scan_results">Revise los artículos detectaos, los precios y les equivalencies enantes de guardalos.</string>
+    <string name="scan_previous">Última compra: %1$s / %2$s</string>
+    <string name="scan_new">Nun hai una compra anterior comparable</string>
+    <string name="scan_up">↗ +%1$s / %2$s</string>
+    <string name="scan_down">↘ −%1$s / %2$s</string>
+    <string name="scan_equal">= %1$s / %2$s</string>
+    <string name="scan_historic">Referencia de 2003: %1$s / %2$s</string>
+    <string name="scan_no_match">Ensin equivalencia de 2003 confirmada</string>
+    <string name="scan_detail">Ver la evolución del preciu</string>
+    <string name="scan_save">Guardar la compra</string>
+    <string name="scan_saved">Compra guardada nel dispositivu.</string>
+    <string name="scan_error">Nun se pudo guardar: %1$s</string>
+    <string name="scan_invalid">Revise'l nome, el preciu y la cantidá de los artículos.</string>
+    <string name="scan_summary">Equivalencies: %1$d/%2$d · Güei: %3$s · 2003: %4$s · Guardiella: %5$s</string>
+    <string name="scan_back">← Volver al tique</string>
+</resources>
