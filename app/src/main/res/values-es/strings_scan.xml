@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_ready">Apunte al ticket y haga la fotografía.</string>
+    <string name="scan_results">Revise los artículos detectados, los precios y las equivalencias antes de guardarlos.</string>
+    <string name="scan_previous">Última compra: %1$s / %2$s</string>
+    <string name="scan_new">Sin ninguna compra anterior comparable</string>
+    <string name="scan_up">↗ +%1$s / %2$s</string>
+    <string name="scan_down">↘ −%1$s / %2$s</string>
+    <string name="scan_equal">= %1$s / %2$s</string>
+    <string name="scan_historic">Referencia de 2003: %1$s / %2$s</string>
+    <string name="scan_no_match">Sin equivalencia de 2003 confirmada</string>
+    <string name="scan_detail">Ver la evolución del precio</string>
+    <string name="scan_save">Guardar la compra</string>
+    <string name="scan_saved">Compra guardada en el dispositivo.</string>
+    <string name="scan_error">No se ha podido guardar: %1$s</string>
+    <string name="scan_invalid">Revise el nombre, el precio y la cantidad de los artículos.</string>
+    <string name="scan_summary">Equivalencias: %1$d/%2$d · Hoy: %3$s · 2003: %4$s · Hucha: %5$s</string>
+    <string name="scan_back">← Volver al ticket</string>
+</resources>
