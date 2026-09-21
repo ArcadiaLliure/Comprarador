@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_review_ocr">Revisar o texto recoñecido</string>
+    <string name="scan_reparse">Volver analizar</string>
+    <string name="scan_copy_ocr">Copiar o texto</string>
+    <string name="scan_unverified">Non se puideron verificar o número de artigos e o total do tícket. Revise todos os artigos antes de gardar.</string>
+    <string name="scan_incomplete_title">Tícket sen verificar</string>
+    <string name="scan_incomplete_message">O número de artigos ou o total non coincide co tícket, ou non se puido ler. Comprobe que non falte ningún produto antes de gardar.</string>
+    <string name="scan_save_anyway">Gardar igualmente</string>
+</resources>
