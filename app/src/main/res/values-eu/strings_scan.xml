@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_ready">Jarri tiketa kameraren aurrean eta atera argazkia.</string>
+    <string name="scan_results">Berrikusi antzemandako produktuak, prezioak eta baliokidetasunak gorde aurretik.</string>
+    <string name="scan_previous">Azken erosketa: %1$s / %2$s</string>
+    <string name="scan_new">Ez dago alderatzeko aurreko erosketarik</string>
+    <string name="scan_up">↗ +%1$s / %2$s</string>
+    <string name="scan_down">↘ −%1$s / %2$s</string>
+    <string name="scan_equal">= %1$s / %2$s</string>
+    <string name="scan_historic">2003ko erreferentzia: %1$s / %2$s</string>
+    <string name="scan_no_match">Ez dago 2003ko baliokidetasun egiaztaturik</string>
+    <string name="scan_detail">Ikusi prezioaren bilakaera</string>
+    <string name="scan_save">Gorde erosketa</string>
+    <string name="scan_saved">Erosketa gailuan gorde da.</string>
+    <string name="scan_error">Ezin izan da gorde: %1$s</string>
+    <string name="scan_invalid">Berrikusi produktuen izena, prezioa eta kopurua.</string>
+    <string name="scan_summary">Baliokidetasunak: %1$d/%2$d · Gaur: %3$s · 2003: %4$s · Itsulapikoa: %5$s</string>
+    <string name="scan_back">← Itzuli tiketera</string>
+</resources>
