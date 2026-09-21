@@ -54,6 +54,8 @@ class ScanReceiptActivity : ComponentActivity() {
     private lateinit var results: LinearLayout
     private lateinit var summary: TextView
     private lateinit var saveButton: Button
+    private lateinit var addButton: Button
+    private var recognizedReceipt: ReceiptParseResult? = null
     private val rows = mutableListOf<ScanRow>()
     private val recognizer by lazy { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
     private var photoUri: Uri? = null
@@ -177,6 +179,15 @@ class ScanReceiptActivity : ComponentActivity() {
         body.addView(status, margin(14))
         results = column()
         body.addView(results, margin())
+        addButton = action(getString(R.string.scan_add_item), false) {
+            saved = false
+            addCard(rows.size, ReceiptLine("", 0L, 1000L, "ud"))
+            saveButton.visibility = View.VISIBLE
+            saveButton.isEnabled = true
+            updateSummary()
+            refreshValidation()
+        }.apply { visibility = View.GONE }
+        body.addView(addButton, margin(10))
         summary = text("", 15f, ink)
         body.addView(summary, margin())
         saveButton = action(getString(R.string.scan_save)) { saveReceipt() }.apply { visibility = View.GONE }
@@ -204,7 +215,8 @@ class ScanReceiptActivity : ComponentActivity() {
             recognizer.process(InputImage.fromFilePath(this, uri))
                 .addOnSuccessListener { result ->
                     ocrText = result.text
-                    showRows(ReceiptParser.parse(ocrText))
+                    val parsed = ReceiptParser.parseDetailed(ocrText)
+                    showRows(parsed.lines, parsed)
                 }
                 .addOnFailureListener { e -> showMessage(getString(R.string.ocr_error, e.message.orEmpty())) }
         } catch (e: Exception) {
@@ -212,15 +224,44 @@ class ScanReceiptActivity : ComponentActivity() {
         }
     }
 
-    private fun showRows(items: List<ReceiptLine>) {
+    private fun showRows(items: List<ReceiptLine>, parsed: ReceiptParseResult) {
+        recognizedReceipt = parsed
         rows.clear()
         results.removeAllViews()
         saveButton.visibility = if (items.isEmpty()) View.GONE else View.VISIBLE
+        addButton.visibility = View.VISIBLE
         saveButton.isEnabled = items.isNotEmpty()
         summary.text = ""
         showMessage(if (items.isEmpty()) getString(R.string.no_lines) else getString(R.string.scan_results))
         items.forEachIndexed { index, item -> addCard(index, item) }
         updateSummary()
+        refreshValidation()
+    }
+
+    /** Els totals del tiquet són un control de qualitat de l'OCR, no articles. */
+    private fun refreshValidation() {
+        if (!::status.isInitialized || saved) return
+        val receipt = recognizedReceipt ?: return
+        val warnings = mutableListOf<String>()
+        val expectedCount = receipt.declaredItemCount
+        if (expectedCount != null && expectedCount != rows.size) {
+            warnings += getString(R.string.scan_count_warning, expectedCount, rows.size)
+        }
+        val sum = runCatching {
+            rows.fold(0L) { acc, row ->
+                Math.addExact(acc, ReceiptParser.moneyMilli(row.price.text.toString()))
+            }
+        }.getOrNull()
+        val expectedTotal = receipt.declaredTotalMilli
+        if (sum != null && expectedTotal != null && sum != expectedTotal) {
+            warnings += getString(R.string.scan_total_warning, money(expectedTotal), money(sum))
+        }
+        status.text = when {
+            warnings.isNotEmpty() -> warnings.joinToString("\n")
+            rows.isEmpty() -> getString(R.string.no_lines)
+            else -> getString(R.string.scan_results)
+        }
+        status.setTextColor(if (warnings.isNotEmpty()) red else muted)
     }
 
     private fun addCard(index: Int, item: ReceiptLine) {
@@ -277,6 +318,7 @@ class ScanReceiptActivity : ComponentActivity() {
                 if (saved) return
                 refreshRow(row)
                 updateSummary()
+                refreshValidation()
             }
             override fun afterTextChanged(s: Editable?) = Unit
         }

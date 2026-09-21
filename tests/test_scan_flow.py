@@ -55,9 +55,11 @@ class ScanFlowTests(unittest.TestCase):
 
     def test_scan_camera_cards_shared_chart_and_history(self):
         self.assertIn('if (savedInstanceState == null) window.decorView.post { startCamera() }', SCAN)
-        self.assertIn('ReceiptParser.parse(ocrText)', SCAN)
+        self.assertIn('ReceiptParser.parseDetailed(ocrText)', SCAN)
         self.assertIn('PurchaseInsights.variation(PurchaseInsights.unitPrice(current, quantity), previous.unitPriceMilli)', SCAN)
         self.assertIn('row.trend.setTextColor(when { difference > 0 -> red; difference < 0 -> downGreen; else -> orange })', SCAN)
+        self.assertIn('private fun refreshValidation()', SCAN)
+        self.assertIn('R.string.scan_add_item', SCAN)
         self.assertIn('history.record(key, now, items)', SCAN)
         self.assertIn('ledger.record(SavingEvent(', SCAN)
         self.assertIn('putExtra("product_id", id)', SCAN)
