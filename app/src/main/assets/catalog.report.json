@@ -1,0 +1,16 @@
+{
+  "carrefour_input": 11216,
+  "carrefour_imported": 11215,
+  "carrefour_unknown_quantity": 895,
+  "carrefour_rejected": 1,
+  "eroski_input": 5933,
+  "eroski_imported": 5933,
+  "eroski_unknown_quantity": 484,
+  "products_total": 17148,
+  "indexed_total": 17148,
+  "integrity": "ok",
+  "output": "/home/runner/work/Comprarador/Comprarador/app/src/main/assets/catalog.sqlite",
+  "rejects_file": "/home/runner/work/Comprarador/Comprarador/data/rejects.jsonl",
+  "carrefour_sha256": "75d4407e94c4e98b95d1f5826f486d51292d52540a5632f5d08a9a964e24a70a",
+  "eroski_sha256": "0af6f139ab1f97383cc7397ad9947bd83157ddaa064ef12c10b1703fdcbb005b"
+}

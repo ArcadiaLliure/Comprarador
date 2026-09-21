@@ -1,0 +1,44 @@
+name: Publicació inicial de Comprarador
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/reinici.yml'
+jobs:
+  reinici:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preparar i verificar la publicació
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/neteja_publicacio.py
+          rm -f .github/workflows/android-apk.yml
+          git restore --source=HEAD -- .github/workflows/import-source.yml .github/workflows/reinici.yml
+          python -m unittest discover -s tests -v
+      - name: Publicar una revisió inicial sense els avantpassats anteriors
+        shell: bash
+        run: |
+          set -euo pipefail
+          anterior="$(git rev-parse origin/main)"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git checkout --orphan inici-net
+          git add -A
+          git -c commit.gpgsign=false commit --author='Manel <Arcadialliure@outlook.com>' -m 'Inici de Comprarador: aplicació Android, idiomes i guardiola'
+          test "$(git rev-list --count HEAD)" -eq 1
+          git push --force-with-lease="refs/heads/main:$anterior" origin HEAD:main
+          for branca in copia-abans-reinici publicacio-catalana reinici-preparacio temporal-reinici seguretat-reinici preparacio-final copia-provisional ultima-copia reserva-historial copia-reserva-temporal punt-segur revisio-segura copia-de-seguretat backup-final reserva-codi copia-control; do
+            git push origin --delete "$branca" || echo "No s’ha pogut suprimir la branca $branca"
+          done
+          echo 'Revisió inicial publicada.'

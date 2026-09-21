@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="es" />
+    <locale android:name="ca" />
+    <locale android:name="gl" />
+    <locale android:name="eu" />
+    <locale android:name="oc" />
+    <locale android:name="ast" />
+    <locale android:name="an" />
+</locale-config>
