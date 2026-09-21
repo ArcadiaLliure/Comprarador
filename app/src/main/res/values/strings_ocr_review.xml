@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_review_ocr">Revisa el text reconegut</string>
+    <string name="scan_reparse">Torna a analitzar</string>
+    <string name="scan_copy_ocr">Copia el text</string>
+    <string name="scan_unverified">No hem pogut verificar el nombre i el total del tiquet. Reviseu tots els articles abans de desar.</string>
+    <string name="scan_incomplete_title">Tiquet sense verificar</string>
+    <string name="scan_incomplete_message">El nombre o el total dels articles no coincideix amb el tiquet, o no els hem pogut llegir. Comproveu que no falti cap producte abans de desar.</string>
+    <string name="scan_save_anyway">Desa igualment</string>
+</resources>
