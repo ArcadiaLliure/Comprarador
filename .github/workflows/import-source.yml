@@ -19,18 +19,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Corregir i consolidar la sintaxi de l'escàner
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          set -euo pipefail
-          python tools/fix_scan_syntax.py
-          git diff --check
-          if ! git diff --quiet -- app/src/main/java/com/comprarador/app/ScanReceiptActivity.kt; then
-            git -c user.name='Manel' -c user.email='Arcadialliure@outlook.com' add app/src/main/java/com/comprarador/app/ScanReceiptActivity.kt
-            git -c user.name='Manel' -c user.email='Arcadialliure@outlook.com' commit -m 'Corregir la sintaxi de la signatura del tiquet'
-            git push origin HEAD:main
-          fi
       - name: Normalitzar els catàlegs originals i executar les proves
         shell: bash
         run: |
