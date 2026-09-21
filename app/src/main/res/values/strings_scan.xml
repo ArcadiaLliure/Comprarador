@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_ready">Apunteu al tiquet i feu la fotografia.</string>
+    <string name="scan_results">Reviseu els articles detectats, els preus i les equivalències abans de desar-los.</string>
+    <string name="scan_previous">Darrera compra: %1$s / %2$s</string>
+    <string name="scan_new">Sense cap compra anterior comparable</string>
+    <string name="scan_up">↗ +%1$s / %2$s</string>
+    <string name="scan_down">↘ −%1$s / %2$s</string>
+    <string name="scan_equal">= %1$s / %2$s</string>
+    <string name="scan_historic">Referència del 2003: %1$s / %2$s</string>
+    <string name="scan_no_match">Sense equivalència confirmada del 2003</string>
+    <string name="scan_detail">Veure l’evolució del preu</string>
+    <string name="scan_save">Desa la compra</string>
+    <string name="scan_saved">Compra desada al dispositiu.</string>
+    <string name="scan_error">No s’ha pogut desar: %1$s</string>
+    <string name="scan_invalid">Reviseu el nom, el preu i la quantitat dels articles.</string>
+    <string name="scan_summary">Equivalències: %1$d/%2$d · Avui: %3$s · 2003: %4$s · Guardiola: %5$s</string>
+    <string name="scan_back">← Torna al tiquet</string>
+</resources>
