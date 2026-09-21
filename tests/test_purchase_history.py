@@ -57,8 +57,8 @@ class PurchaseHistoryTests(unittest.TestCase):
         self.assertIn('BigDecimal(product.priceMilli)', MAIN)
         self.assertIn('ORDER BY COUNT(DISTINCT l.receipt_fingerprint) DESC', SOURCE)
         gradle = (ROOT / 'app/build.gradle.kts').read_text(encoding='utf-8')
-        self.assertIn('versionName = "0.1.0"', gradle)
-        self.assertIn('versionCode = 3', gradle)
+        self.assertIn('versionName = "0.1.1"', gradle)
+        self.assertIn('versionCode = 4', gradle)
 
 
 if __name__ == '__main__':
