@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ocr_paddle_active">Recoñecemento neuronal local (PaddleOCR)</string>
+    <string name="ocr_paddle_fallback">PaddleOCR non está dispoñible (%1$s). Utilízase o recoñecemento anterior.</string>
+</resources>
