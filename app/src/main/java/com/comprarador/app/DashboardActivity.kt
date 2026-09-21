@@ -61,7 +61,7 @@ class DashboardActivity : ComponentActivity() {
         balance.addView(text(getString(R.string.home_piggy_note), 12f, muted))
         content.addView(balance, params(19))
         content.addView(tile("📷", getString(R.string.home_scan), getString(R.string.home_scan_desc)) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, ScanReceiptActivity::class.java))
         }, params())
         content.addView(tile("▥", getString(R.string.top_title), getString(R.string.home_top_desc)) {
             startActivity(Intent(this, TopPurchasesActivity::class.java))
