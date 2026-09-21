@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def replace_once(text, old, new, label):
-    if new in text:
+    if new and new in text:
         return text
     if text.count(old) != 1:
         raise RuntimeError(f"No s'ha trobat una única àncora per a {label}: {text.count(old)}")

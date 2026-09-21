@@ -41,3 +41,25 @@ Les dades provenen del repositori [«precios», de Jaime Obregón](https://githu
 ## Privadesa i persistència
 
 El prototip no inclou comptes, sincronització ni classificacions en línia. La guardiola és local i es pot perdre si es desinstal·la l'aplicació o se n'esborren les dades; `allowBackup=false`. La fotografia no s'emmagatzema a la base de dades de la guardiola. Una eventual classificació compartida necessitaria una metodologia comparable, consentiment exprés, autenticació i mesures contra la manipulació.
+
+## Versió 0.1 · Top compres i evolució
+
+La portada renovada dona accés a l'escàner i a **Top compres**. Els tiquets confirmats
+es desglossen en una base SQLite privada (`purchase_history.sqlite`) amb taules de
+tiquets, productes canònics i línies. El rànquing compta tiquets diferents per producte,
+amb cercador i filtres de setmana, mes, any i tot el període. Cada targeta mostra un
+gràfic del **preu real per unitat** amb els imports pagats a les diferents dates de
+registre i, si n'hi ha, la referència nominal de 2003. El gràfic no és una sèrie
+de preus de mercat: mostra únicament les compres del dispositiu.
+
+L'historial de la guardiola anterior conserva els seus saldos però no inclou els
+articles originals: **no se'n poden reconstruir les línies retroactivament**.
+Una mateixa empremta de tiquet no pot duplicar les estadístiques. Dues compres
+diferents amb un contingut idèntic poden compartir empremta; caldrà millorar la
+identificació abans de publicar un rànquing entre usuaris. Les equivalències
+històriques continuen requerint confirmació manual.
+
+**Pendent per a la fase de publicitat:** decidir el model publicitari i implementar
+la informació de privadesa i la gestió del consentiment quan es defineixin
+els proveïdors i les finalitats de tractament. No s'inclou cap SDK publicitari
+ni cap transmissió de tiquets en aquesta versió.

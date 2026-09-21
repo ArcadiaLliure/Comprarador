@@ -31,6 +31,7 @@ import java.util.Locale
 class MainActivity : ComponentActivity() {
     private lateinit var catalog: Catalog
     private lateinit var ledger: SavingsLedger
+    private lateinit var history: PurchaseHistory
     private lateinit var receiptEdit: EditText
     private lateinit var status: TextView
     private lateinit var rowsContainer: LinearLayout
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
         try {
             catalog = Catalog(this)
             ledger = SavingsLedger(this)
+            history = PurchaseHistory(this)
         } catch (e: Exception) {
             setContentView(TextView(this).apply {
                 text = getString(R.string.catalog_error, e.message.orEmpty())
@@ -116,7 +118,7 @@ class MainActivity : ComponentActivity() {
         val scroll = ScrollView(this).apply { isFillViewport = true }
         val main = vertical().apply {
             setPadding(dp(16), dp(20), dp(16), dp(28))
-            setBackgroundColor(Color.rgb(248, 250, 248))
+            setBackgroundColor(Color.rgb(245, 248, 245))
         }
         scroll.addView(main)
         main.addView(text(getString(R.string.app_name), 29f, true))
@@ -158,6 +160,9 @@ class MainActivity : ComponentActivity() {
         walletText = text("", 16f)
         main.addView(walletText)
         main.addView(button(getString(R.string.piggy_refresh)) { updatePiggyBank() })
+        main.addView(button(getString(R.string.top_title)) {
+            startActivity(android.content.Intent(this, TopPurchasesActivity::class.java))
+        })
         main.addView(text(getString(R.string.piggy_note), 12f))
         setContentView(scroll)
         updatePiggyBank()
@@ -207,7 +212,11 @@ class MainActivity : ComponentActivity() {
     private fun addItem(position: Int, item: ReceiptLine) {
         val group = vertical().apply {
             setPadding(dp(12), dp(10), dp(12), dp(12))
-            setBackgroundColor(Color.WHITE)
+            background = android.graphics.drawable.GradientDrawable().apply {
+                setColor(Color.WHITE)
+                cornerRadius = dp(18).toFloat()
+            }
+            elevation = dp(2).toFloat()
         }
         group.addView(text(getString(R.string.product_number, position + 1), 17f, true))
         val name = field(getString(R.string.description), item.description)
@@ -279,6 +288,15 @@ class MainActivity : ComponentActivity() {
             if (current < 0) { summary.text = getString(R.string.negative_price); return }
             currentAll = try { Math.addExact(currentAll, current) }
                          catch (_: ArithmeticException) { summary.text = getString(R.string.math_error); return }
+            val checkedQuantity = try { ReceiptParser.moneyMilli(row.quantity.text.toString()) }
+                                  catch (_: Exception) {
+                                      summary.text = getString(R.string.invalid_quantity, row.name.text.toString())
+                                      return
+                                  }
+            if (checkedQuantity <= 0L) {
+                summary.text = getString(R.string.invalid_quantity, row.name.text.toString())
+                return
+            }
             val selected = row.matches.selectedItemPosition
             if (selected <= 0 || selected > row.candidates.size) continue
             val p = row.candidates[selected - 1]
@@ -327,7 +345,7 @@ class MainActivity : ComponentActivity() {
         ).joinToString("\n")
         comparison = Comparison(currentMatched, historicalMatched, matched, rows.size,
             coverage, formSignature())
-        saveButton.isEnabled = diff != 0L
+        saveButton.isEnabled = true // També conservem les compres sense diferència de preu.
     }
 
     private fun saveSaving() {
@@ -339,7 +357,6 @@ class MainActivity : ComponentActivity() {
         }
         val saving = try { Math.subtractExact(candidate.historic, candidate.current) }
                      catch (_: ArithmeticException) { status.text = getString(R.string.math_error); return }
-        if (saving == 0L) { saveButton.isEnabled = false; status.text = getString(R.string.not_saving); return }
         val now = System.currentTimeMillis()
         // No incloem la data per evitar duplicar un mateix tiquet escanejat un altre dia.
         val payload = candidate.formSignature
@@ -353,6 +370,23 @@ class MainActivity : ComponentActivity() {
                 matchedLines = candidate.matched, totalLines = candidate.total,
                 coveragePermille = candidate.coveragePermille, createdAtMs = now
             ))
+            // El registre personal és idempotent: també repara un desament anterior incomplet.
+            val purchaseLines = rows.map { row ->
+                val selected = row.candidates.getOrNull(row.matches.selectedItemPosition - 1)
+                val unitPrice = selected?.takeIf { it.quantityMilli > 0L }?.let { product ->
+                    BigDecimal(product.priceMilli).multiply(BigDecimal(1000))
+                        .divide(BigDecimal(product.quantityMilli), 0, RoundingMode.HALF_UP).longValueExact()
+                }
+                PurchasedItem(
+                    description = row.name.text.toString(),
+                    currentMilli = ReceiptParser.moneyMilli(row.amount.text.toString()),
+                    quantityMilli = ReceiptParser.moneyMilli(row.quantity.text.toString()),
+                    unit = row.unit.selectedItem.toString(),
+                    historicalId = selected?.id,
+                    historicalUnitMilli = unitPrice
+                )
+            }
+            history.record(fingerprint, now, purchaseLines)
             status.text = if (inserted) getString(R.string.saving_recorded, euro(saving))
                           else getString(R.string.already_saved)
             saveButton.isEnabled = false
@@ -402,6 +436,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         if (::catalog.isInitialized) catalog.close()
+        if (::history.isInitialized) history.close()
+        if (::ledger.isInitialized) ledger.close()
         if (::ledger.isInitialized) ledger.close()
         if (::receiptEdit.isInitialized) recognizer.close()
         super.onDestroy()

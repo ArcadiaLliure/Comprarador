@@ -37,7 +37,8 @@ class SignedLedgerContractTests(unittest.TestCase):
         self.assertEqual(self.db.execute('SELECT COUNT(*) FROM saving_events').fetchone()[0], 1)
 
     def test_app_accepts_negative_movements(self):
-        self.assertIn('saveButton.isEnabled = diff != 0L', ACTIVITY)
+        self.assertIn('saveButton.isEnabled = true', ACTIVITY)
+        self.assertIn('history.record(fingerprint, now, purchaseLines)', ACTIVITY)
         self.assertIn('Math.subtractExact(candidate.historic, candidate.current)', ACTIVITY)
         self.assertIn('val payload = candidate.formSignature', ACTIVITY)
         self.assertIn('Math.subtractExact(event.historicalMilli, event.currentMilli)', SOURCE)

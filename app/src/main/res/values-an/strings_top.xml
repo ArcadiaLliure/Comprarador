@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Top compras</string>
+    <string name="top_subtitle">Os articlos que más compras</string>
+    <string name="top_search">Buscar un producto</string>
+    <string name="top_period_all">Siempre</string>
+    <string name="top_period_week">Semana</string>
+    <string name="top_period_month">Mes</string>
+    <string name="top_period_year">Any</string>
+    <string name="top_empty">Encara no bi ha compras rechistradas con iste filtro.</string>
+    <string name="top_purchases">%1$d compras</string>
+    <string name="top_spent">Gasto</string>
+    <string name="top_quantity">Cantidat</string>
+    <string name="top_detail">Evolución d\'o pre precio rechistrau</string>
+    <string name="top_back">← Tornar ta la clasificación</string>
+    <string name="top_price_unit">Precio por %1$s</string>
+    <string name="top_graph_note">Cada punto ye un tiquet; a linia discontinua ye a referencia de 2003.</string>
+    <string name="top_one_point">Nomás bi ha un precio rechistrau: calen más compras ta veyer a evolución.</string>
+    <string name="top_historic">Referencia de 2003</string>
+    <string name="top_graph_accessibility">Grafico con %1$d precios rechistraus</string>
+    <string name="home_subtitle">As tuyas compras, con perspectiva.</string>
+    <string name="home_piggy_note">Balanç nominal d\'as compras comparadas con 2003.</string>
+    <string name="home_scan">Escaniar un tiquet</string>
+    <string name="home_scan_desc">Compara precios y rechistra os articlos.</string>
+    <string name="home_top_desc">Consulta os articlos freqüents y a suya evolución.</string>
+    <string name="home_privacy">Tot se alza en o dispositivo. Sin anuncios ni ninviar tiquets.</string>
+    <string name="home_balance_accessibility">Saldo d\'a guardiola: %1$s</string>
+    <string name="home_balance_unavailable">Saldo no disponible</string>
+</resources>

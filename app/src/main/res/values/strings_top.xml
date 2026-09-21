@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Top compres</string>
+    <string name="top_subtitle">Els vostres articles més freqüents</string>
+    <string name="top_search">Cerca un producte</string>
+    <string name="top_period_all">Sempre</string>
+    <string name="top_period_week">Setmana</string>
+    <string name="top_period_month">Mes</string>
+    <string name="top_period_year">Any</string>
+    <string name="top_empty">Encara no hi ha compres registrades amb aquest filtre.</string>
+    <string name="top_purchases">%1$d compres</string>
+    <string name="top_spent">Despesa</string>
+    <string name="top_quantity">Quantitat</string>
+    <string name="top_detail">Evolució del preu registrat</string>
+    <string name="top_back">← Torna al rànquing</string>
+    <string name="top_price_unit">Preu per %1$s</string>
+    <string name="top_graph_note">Cada punt és un tiquet; la línia discontínua és la referència del 2003.</string>
+    <string name="top_one_point">Només hi ha un preu registrat: calen més compres per veure una evolució.</string>
+    <string name="top_historic">Referència del 2003</string>
+    <string name="top_graph_accessibility">Gràfic amb %1$d preus registrats</string>
+    <string name="home_subtitle">Les vostres compres, amb perspectiva.</string>
+    <string name="home_piggy_note">Balanç nominal de les compres comparades amb el 2003.</string>
+    <string name="home_scan">Escaneja un tiquet</string>
+    <string name="home_scan_desc">Compareu els preus i registreu els articles.</string>
+    <string name="home_top_desc">Consulteu els articles freqüents i la seva evolució.</string>
+    <string name="home_privacy">Tot es desa al dispositiu. Sense anuncis ni enviament de tiquets.</string>
+    <string name="home_balance_accessibility">Saldo de la guardiola: %1$s</string>
+    <string name="home_balance_unavailable">Saldo no disponible</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Top compras</string>
+    <string name="top_subtitle">Tus artículos más frecuentes</string>
+    <string name="top_search">Buscar un producto</string>
+    <string name="top_period_all">Siempre</string>
+    <string name="top_period_week">Semana</string>
+    <string name="top_period_month">Mes</string>
+    <string name="top_period_year">Año</string>
+    <string name="top_empty">Todavía no hay compras registradas con este filtro.</string>
+    <string name="top_purchases">%1$d compras</string>
+    <string name="top_spent">Gasto</string>
+    <string name="top_quantity">Cantidad</string>
+    <string name="top_detail">Evolución del precio registrado</string>
+    <string name="top_back">← Volver al ranking</string>
+    <string name="top_price_unit">Precio por %1$s</string>
+    <string name="top_graph_note">Cada punto es un tique; la línea discontinua es la referencia de 2003.</string>
+    <string name="top_one_point">Solo hay un precio registrado: hacen falta más compras para ver su evolución.</string>
+    <string name="top_historic">Referencia de 2003</string>
+    <string name="top_graph_accessibility">Gráfico con %1$d precios registrados</string>
+    <string name="home_subtitle">Tus compras, con perspectiva.</string>
+    <string name="home_piggy_note">Balance nominal de las compras comparadas con 2003.</string>
+    <string name="home_scan">Escanear un tique</string>
+    <string name="home_scan_desc">Compara precios y registra los artículos.</string>
+    <string name="home_top_desc">Consulta los artículos frecuentes y su evolución.</string>
+    <string name="home_privacy">Todo se guarda en el dispositivo. Sin anuncios ni envío de tiques.</string>
+    <string name="home_balance_accessibility">Saldo de la hucha: %1$s</string>
+    <string name="home_balance_unavailable">Saldo no disponible</string>
+</resources>

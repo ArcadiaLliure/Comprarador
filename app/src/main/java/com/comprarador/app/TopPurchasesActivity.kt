@@ -102,7 +102,7 @@ class TopPurchasesActivity : ComponentActivity() {
         header.addView(label(subtitle, 14f, false, Color.rgb(218, 242, 227)))
         root.addView(header)
         setContentView(root)
-        val scroll = ScrollView(this).apply { clipToPadding = false; fillViewport = true }
+        val scroll = ScrollView(this).apply { clipToPadding = false; isFillViewport = true }
         val body = vertical().apply { setPadding(dp(16), dp(18), dp(16), dp(26)) }
         scroll.addView(body)
         root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))

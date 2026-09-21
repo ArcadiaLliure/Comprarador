@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Top compres</string>
+    <string name="top_subtitle">Los artículos que más compres</string>
+    <string name="top_search">Buscar un productu</string>
+    <string name="top_period_all">Siempres</string>
+    <string name="top_period_week">Selmana</string>
+    <string name="top_period_month">Mes</string>
+    <string name="top_period_year">Añu</string>
+    <string name="top_empty">Entá nun hai compres rexistraes con esti filtru.</string>
+    <string name="top_purchases">%1$d compres</string>
+    <string name="top_spent">Gastu</string>
+    <string name="top_quantity">Cantidá</string>
+    <string name="top_detail">Evolución del preciu rexistráu</string>
+    <string name="top_back">← Volver a la clasificación</string>
+    <string name="top_price_unit">Preciu por %1$s</string>
+    <string name="top_graph_note">Cada puntu ye un tique; la llinia discontinua ye la referencia de 2003.</string>
+    <string name="top_one_point">Namás hai un preciu rexistráu: faen falta más compres pa ver la evolución.</string>
+    <string name="top_historic">Referencia de 2003</string>
+    <string name="top_graph_accessibility">Gráficu con %1$d precios rexistraos</string>
+    <string name="home_subtitle">Les tos compres, con perspectiva.</string>
+    <string name="home_piggy_note">Balance nominal de les compres comparaes con 2003.</string>
+    <string name="home_scan">Escaniar un tique</string>
+    <string name="home_scan_desc">Compara precios y rexistra los artículos.</string>
+    <string name="home_top_desc">Consulta los artículos frecuentes y la so evolución.</string>
+    <string name="home_privacy">Too se guarda nel dispositivu. Ensin anuncios nin unviar tiques.</string>
+    <string name="home_balance_accessibility">Saldo de la hucha: %1$s</string>
+    <string name="home_balance_unavailable">Saldo non disponible</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Erosketa nagusiak</string>
+    <string name="top_subtitle">Gehien erosten dituzun produktuak</string>
+    <string name="top_search">Bilatu produktua</string>
+    <string name="top_period_all">Beti</string>
+    <string name="top_period_week">Astea</string>
+    <string name="top_period_month">Hilabetea</string>
+    <string name="top_period_year">Urtea</string>
+    <string name="top_empty">Ez dago iragazki honekin erregistratutako erosketarik.</string>
+    <string name="top_purchases">%1$d erosketa</string>
+    <string name="top_spent">Gastua</string>
+    <string name="top_quantity">Kopurua</string>
+    <string name="top_detail">Erregistratutako prezioaren bilakaera</string>
+    <string name="top_back">← Itzuli sailkapenera</string>
+    <string name="top_price_unit">Prezioa %1$s bakoitzeko</string>
+    <string name="top_graph_note">Puntu bakoitza tiketa da; marra etena 2003ko erreferentzia da.</string>
+    <string name="top_one_point">Prezio bakarra dago erregistratuta: erosketa gehiago behar dira bilakaera ikusteko.</string>
+    <string name="top_historic">2003ko erreferentzia</string>
+    <string name="top_graph_accessibility">%1$d prezioren grafikoa</string>
+    <string name="home_subtitle">Zure erosketak, ikuspegi zabalagoarekin.</string>
+    <string name="home_piggy_note">2003arekin alderatutako erosketen saldo nominala.</string>
+    <string name="home_scan">Eskaneatu tiketa</string>
+    <string name="home_scan_desc">Alderatu prezioak eta erregistratu produktuak.</string>
+    <string name="home_top_desc">Ikusi ohiko produktuak eta haien bilakaera.</string>
+    <string name="home_privacy">Dena gailuan gordetzen da. Iragarkirik eta tiket-bidalketarik gabe.</string>
+    <string name="home_balance_accessibility">Itsulapikoaren saldoa: %1$s</string>
+    <string name="home_balance_unavailable">Saldoa ez dago erabilgarri</string>
+</resources>

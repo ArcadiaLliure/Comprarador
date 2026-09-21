@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Top crompes</string>
+    <string name="top_subtitle">Vòstres articles mai crompats</string>
+    <string name="top_search">Cercar un produit</string>
+    <string name="top_period_all">Totjorn</string>
+    <string name="top_period_week">Setmana</string>
+    <string name="top_period_month">Mes</string>
+    <string name="top_period_year">An</string>
+    <string name="top_empty">I a pas encara de crompas enregistradas amb aquel filtre.</string>
+    <string name="top_purchases">%1$d crompas</string>
+    <string name="top_spent">Despensa</string>
+    <string name="top_quantity">Quantitat</string>
+    <string name="top_detail">Evolucion del prètz enregistrat</string>
+    <string name="top_back">← Tornar al classament</string>
+    <string name="top_price_unit">Prètz per %1$s</string>
+    <string name="top_graph_note">Cada punt es un tiquet; la linha discontinua es la referéncia de 2003.</string>
+    <string name="top_one_point">I a un sol prètz enregistrat: cal mai de crompas per veire una evolucion.</string>
+    <string name="top_historic">Referéncia de 2003</string>
+    <string name="top_graph_accessibility">Grafic amb %1$d prètzes enregistrats</string>
+    <string name="home_subtitle">Vòstres crompas, amb perspectiva.</string>
+    <string name="home_piggy_note">Balanç nominal de las crompas comparadas amb 2003.</string>
+    <string name="home_scan">Numerizar un tiquet</string>
+    <string name="home_scan_desc">Comparatz los prètzes e enregistratz los articles.</string>
+    <string name="home_top_desc">Consultatz los articles frequents e lor evolucion.</string>
+    <string name="home_privacy">Tot es enregistrat dins lo dispositiu. Sens publicitat ni mandadís de tiquets.</string>
+    <string name="home_balance_accessibility">Sòlde de la tireta: %1$s</string>
+    <string name="home_balance_unavailable">Sòlde indisponible</string>
+</resources>

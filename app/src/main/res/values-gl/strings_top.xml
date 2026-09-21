@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_title">Top compras</string>
+    <string name="top_subtitle">Os teus artigos máis frecuentes</string>
+    <string name="top_search">Buscar un produto</string>
+    <string name="top_period_all">Sempre</string>
+    <string name="top_period_week">Semana</string>
+    <string name="top_period_month">Mes</string>
+    <string name="top_period_year">Ano</string>
+    <string name="top_empty">Aínda non hai compras rexistradas con este filtro.</string>
+    <string name="top_purchases">%1$d compras</string>
+    <string name="top_spent">Gasto</string>
+    <string name="top_quantity">Cantidade</string>
+    <string name="top_detail">Evolución do prezo rexistrado</string>
+    <string name="top_back">← Volver á clasificación</string>
+    <string name="top_price_unit">Prezo por %1$s</string>
+    <string name="top_graph_note">Cada punto é un tícket; a liña descontinua é a referencia de 2003.</string>
+    <string name="top_one_point">Só hai un prezo rexistrado: fan falta máis compras para ver a evolución.</string>
+    <string name="top_historic">Referencia de 2003</string>
+    <string name="top_graph_accessibility">Gráfico con %1$d prezos rexistrados</string>
+    <string name="home_subtitle">As túas compras, con perspectiva.</string>
+    <string name="home_piggy_note">Balance nominal das compras comparadas con 2003.</string>
+    <string name="home_scan">Escanear un tícket</string>
+    <string name="home_scan_desc">Compara prezos e rexistra os artigos.</string>
+    <string name="home_top_desc">Consulta os artigos frecuentes e a súa evolución.</string>
+    <string name="home_privacy">Todo se garda no dispositivo. Sen anuncios nin envío de tíckets.</string>
+    <string name="home_balance_accessibility">Saldo da hucha: %1$s</string>
+    <string name="home_balance_unavailable">Saldo non dispoñible</string>
+</resources>
