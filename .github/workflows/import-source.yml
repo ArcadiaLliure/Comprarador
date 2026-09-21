@@ -53,15 +53,23 @@ jobs:
         run: gradle :app:assembleDebug --no-daemon --stacktrace
       - uses: actions/upload-artifact@v4
         with:
-          name: Comprarador-v0.1.0-debug
+          name: Comprarador-v0.1.1-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-      - name: Etiquetar la revisió 0.1.0
+      - name: Etiquetar i publicar la revisió 0.1.1
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if ! git ls-remote --exit-code --tags origin refs/tags/v0.1.0 > /dev/null 2>&1; then
-            git -c user.name='Manel' -c user.email='Arcadialliure@outlook.com' tag -a v0.1.0 -m 'Comprarador 0.1.0'
-            git push origin refs/tags/v0.1.0
+          if ! git ls-remote --exit-code --tags origin refs/tags/v0.1.1 > /dev/null 2>&1; then
+            git -c user.name='Manel' -c user.email='Arcadialliure@outlook.com' tag -a v0.1.1 -m 'Comprarador 0.1.1'
+            git push origin refs/tags/v0.1.1
+          fi
+          if ! gh release view v0.1.1 > /dev/null 2>&1; then
+            cp app/build/outputs/apk/debug/app-debug.apk Comprarador-v0.1.1.apk
+            gh release create v0.1.1 Comprarador-v0.1.1.apk \
+              --title 'Comprarador 0.1.1 · prova Android' \
+              --notes 'Versió de prova: escaneig directe, targetes OCR, comparació amb la darrera compra i gràfic del 2003 i les compres desades. APK de depuració; no és una versió comercial signada. Les claus de depuració poden variar entre compilacions: no desinstal·leu una versió anterior sense preservar les dades locals.'
           fi
