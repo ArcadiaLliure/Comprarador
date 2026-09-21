@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_add_item">＋ Afegeix un article</string>
+    <string name="scan_count_warning">⚠️ El tiquet indica %1$d articles, però se n’han detectat %2$d. Reviseu-los i afegiu els que faltin.</string>
+    <string name="scan_total_warning">⚠️ La suma dels articles (%2$s) no quadra amb el total del tiquet (%1$s). Reviseu els imports, els pesos i els descomptes.</string>
+</resources>
