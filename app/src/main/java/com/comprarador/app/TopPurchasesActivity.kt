@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.RectF
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -26,7 +25,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.math.max
 
-/** Historial privat i consultable sense xarxa. */
+/** El mateix detall s'obre des del rànquing i des de les targetes de l'escaneig. */
 class TopPurchasesActivity : ComponentActivity() {
     private val ink = Color.rgb(27, 55, 48)
     private val muted = Color.rgb(104, 123, 116)
@@ -38,13 +37,20 @@ class TopPurchasesActivity : ComponentActivity() {
     private lateinit var search: EditText
     private var period = "all"
     private var selected: FrequentItem? = null
+    private var directlyOpened = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         history = PurchaseHistory(this)
         window.statusBarColor = green
         window.navigationBarColor = background
-        renderList()
+        val id = intent.getLongExtra("product_id", -1L)
+        val directItem = if (id > 0L) PurchaseInsights(history.readableDatabase).item(id) else null
+        if (directItem != null) {
+            directlyOpened = true
+            selected = directItem
+            renderDetail(directItem)
+        } else renderList()
     }
 
     override fun onDestroy() {
@@ -54,7 +60,9 @@ class TopPurchasesActivity : ComponentActivity() {
 
     @Deprecated("Gestionat per a mantenir la navegació enrere a Android antics")
     override fun onBackPressed() {
-        if (selected != null) { selected = null; renderList() } else super.onBackPressed()
+        if (directlyOpened) finish()
+        else if (selected != null) { selected = null; renderList() }
+        else super.onBackPressed()
     }
 
     private fun dp(n: Int) = (n * resources.displayMetrics.density + 0.5f).toInt()
@@ -189,11 +197,13 @@ class TopPurchasesActivity : ComponentActivity() {
     private fun renderDetail(item: FrequentItem) {
         val body = page(item.name, getString(R.string.top_detail))
         val back = Button(this).apply {
-            text = getString(R.string.top_back)
+            text = getString(if (directlyOpened) R.string.scan_back else R.string.top_back)
             isAllCaps = false
             setTextColor(green)
             background = shape(Color.WHITE, 14)
-            setOnClickListener { selected = null; renderList() }
+            setOnClickListener {
+                if (directlyOpened) finish() else { selected = null; renderList() }
+            }
         }
         body.addView(back, margin())
         val summary = surface().apply {
@@ -205,7 +215,6 @@ class TopPurchasesActivity : ComponentActivity() {
         val points = history.series(item.id)
         val chartCard = surface()
         chartCard.addView(label(getString(R.string.top_price_unit, item.unit), 19f, true))
-        chartCard.addView(label(getString(R.string.top_graph_note), 12f, false, muted))
         chartCard.addView(PriceChart(points, item.historicalUnitMilli),
             LinearLayout.LayoutParams(-1, dp(245)).apply { topMargin = dp(18) })
         if (points.size == 1) chartCard.addView(label(getString(R.string.top_one_point), 12f, false, muted))
@@ -218,7 +227,7 @@ class TopPurchasesActivity : ComponentActivity() {
         body.addView(chartCard, margin())
     }
 
-    /** Gràfic Canvas local, amb eix de dates i referència històrica diferenciada. */
+    /** 2003 apareix a l'esquerra com a punt separat; l'espai temporal de 23 anys no es dibuixa a escala. */
     private inner class PriceChart(
         private val values: List<PricePoint>, private val historic: Long?
     ) : View(this@TopPurchasesActivity) {
@@ -226,7 +235,7 @@ class TopPurchasesActivity : ComponentActivity() {
         init { contentDescription = getString(R.string.top_graph_accessibility, values.size) }
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
-            if (values.isEmpty()) return
+            if (values.isEmpty() && historic == null) return
             val left = dp(54).toFloat()
             val right = width - dp(14).toFloat()
             val top = dp(16).toFloat()
@@ -235,11 +244,12 @@ class TopPurchasesActivity : ComponentActivity() {
             val low = (prices.minOrNull() ?: 0.0).coerceAtMost(0.0)
             val high = max(1.0, (prices.maxOrNull() ?: 1.0) * 1.15)
             fun y(price: Double) = (bottom - ((price - low) / (high - low) * (bottom - top))).toFloat()
-            val first = values.first().registeredMs
-            val last = values.last().registeredMs
-            fun x(index: Int, p: PricePoint): Float = if (values.size == 1) (left + right) / 2f
-                else if (first == last) left + (right - left) * index / (values.size - 1)
-                else left + (right - left) * ((p.registeredMs - first).toDouble() / (last - first)).toFloat()
+            val purchaseLeft = if (historic != null) left + dp(56) else left
+            val first = values.firstOrNull()?.registeredMs ?: 0L
+            val last = values.lastOrNull()?.registeredMs ?: 0L
+            fun x(index: Int, p: PricePoint): Float = if (values.size == 1) (purchaseLeft + right) / 2f
+                else if (first == last) purchaseLeft + (right - purchaseLeft) * index / (values.size - 1)
+                else purchaseLeft + (right - purchaseLeft) * ((p.registeredMs - first).toDouble() / (last - first)).toFloat()
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = dp(1).toFloat()
             paint.color = Color.rgb(221, 231, 223)
@@ -255,29 +265,44 @@ class TopPurchasesActivity : ComponentActivity() {
                 paint.color = Color.rgb(221, 231, 223)
             }
             if (historic != null) {
+                val hx = left + dp(9)
+                val hy = y(historic.toDouble())
                 paint.color = Color.rgb(183, 116, 54)
                 paint.strokeWidth = dp(2).toFloat()
-                paint.pathEffect = DashPathEffect(floatArrayOf(dp(6).toFloat(), dp(5).toFloat()), 0f)
-                canvas.drawLine(left, y(historic.toDouble()), right, y(historic.toDouble()), paint)
+                paint.style = Paint.Style.STROKE
+                paint.pathEffect = DashPathEffect(floatArrayOf(dp(5).toFloat(), dp(4).toFloat()), 0f)
+                if (values.isNotEmpty()) canvas.drawLine(hx, hy, x(0, values.first()),
+                    y(values.first().unitPriceMilli.toDouble()), paint)
                 paint.pathEffect = null
+                paint.style = Paint.Style.FILL
+                canvas.drawCircle(hx, hy, dp(5).toFloat(), paint)
+                paint.textSize = dp(10).toFloat()
+                canvas.drawText("2003", left, height - dp(9).toFloat(), paint)
             }
-            val path = Path()
-            values.forEachIndexed { index, point ->
-                val px = x(index, point)
-                val py = y(point.unitPriceMilli.toDouble())
-                if (index == 0) path.moveTo(px, py) else path.lineTo(px, py)
+            if (values.isNotEmpty()) {
+                val path = Path()
+                values.forEachIndexed { index, point ->
+                    val px = x(index, point)
+                    val py = y(point.unitPriceMilli.toDouble())
+                    if (index == 0) path.moveTo(px, py) else path.lineTo(px, py)
+                }
+                paint.color = green
+                paint.strokeWidth = dp(3).toFloat()
+                paint.style = Paint.Style.STROKE
+                canvas.drawPath(path, paint)
+                paint.style = Paint.Style.FILL
+                values.forEachIndexed { index, point ->
+                    canvas.drawCircle(x(index, point), y(point.unitPriceMilli.toDouble()), dp(4).toFloat(), paint)
+                }
+                paint.color = muted
+                paint.textSize = dp(10).toFloat()
+                val firstLabel = date(first)
+                canvas.drawText(firstLabel, purchaseLeft, height - dp(9).toFloat(), paint)
+                if (values.size > 1) {
+                    val endLabel = date(last)
+                    canvas.drawText(endLabel, right - paint.measureText(endLabel), height - dp(9).toFloat(), paint)
+                }
             }
-            paint.color = green
-            paint.strokeWidth = dp(3).toFloat()
-            paint.style = Paint.Style.STROKE
-            canvas.drawPath(path, paint)
-            paint.style = Paint.Style.FILL
-            values.forEachIndexed { index, point -> canvas.drawCircle(x(index, point), y(point.unitPriceMilli.toDouble()), dp(4).toFloat(), paint) }
-            paint.color = muted
-            paint.textSize = dp(10).toFloat()
-            canvas.drawText(date(first), left, height - dp(9).toFloat(), paint)
-            val endLabel = date(last)
-            canvas.drawText(endLabel, right - paint.measureText(endLabel), height - dp(9).toFloat(), paint)
         }
     }
 }
