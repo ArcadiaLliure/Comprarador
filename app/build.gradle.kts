@@ -29,6 +29,6 @@ android {
 dependencies {
     implementation("androidx.activity:activity-ktx:1.9.3")
     implementation("androidx.core:core-ktx:1.15.0")
-    // Bundled Latin-script model; no model download at first launch.
+    // El model de reconeixement de text llatí s'inclou a l'APK i no es descarrega en el primer inici.
     implementation("com.google.mlkit:text-recognition:16.0.1")
 }
