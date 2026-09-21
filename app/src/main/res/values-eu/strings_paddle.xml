@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ocr_paddle_active">Gailuko neurona bidezko testu-ezagutza (PaddleOCR)</string>
+    <string name="ocr_paddle_fallback">PaddleOCR ez dago erabilgarri (%1$s). Aurreko testu-ezagutza erabiliko da.</string>
+</resources>
