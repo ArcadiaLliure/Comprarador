@@ -3,8 +3,8 @@
     <string name="scan_review_ocr">Revisar o texto reconoixiu</string>
     <string name="scan_reparse">Tornar a analisar</string>
     <string name="scan_copy_ocr">Copiar o texto</string>
-    <string name="scan_unverified">No s'ha puesto verificar o numero de productos ni o total d'o tiquet. Revisatz totz os productos antis de alzar.</string>
+    <string name="scan_unverified">No ye posible verificar o numero de productos ni o total de o tiquet. Revisatz totz os productos antis de alzar.</string>
     <string name="scan_incomplete_title">Tiquet sin verificar</string>
-    <string name="scan_incomplete_message">O numero de productos u o total no coincide con o tiquet, u no s'ha puesto leyer. Comprebatz que no falte garra producto antis de alzar.</string>
+    <string name="scan_incomplete_message">O numero de productos u o total no coincide con o tiquet, u no se podió leyer. Comprebatz que no falte garra producto antis de alzar.</string>
     <string name="scan_save_anyway">Alzar igualment</string>
 </resources>
