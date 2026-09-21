@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_review_ocr">Revisar el testu reconocíu</string>
+    <string name="scan_reparse">Volver analizar</string>
+    <string name="scan_copy_ocr">Copiar el testu</string>
+    <string name="scan_unverified">Nun se pudieron verificar el númberu de productos y el total del tique. Revisái tolos productos enantes de guardar.</string>
+    <string name="scan_incomplete_title">Tique ensin verificar</string>
+    <string name="scan_incomplete_message">El númberu de productos o el total nun concasa col tique, o nun se pudo lleer. Comprobái que nun falte nengún productu enantes de guardar.</string>
+    <string name="scan_save_anyway">Guardar igualmente</string>
+</resources>
