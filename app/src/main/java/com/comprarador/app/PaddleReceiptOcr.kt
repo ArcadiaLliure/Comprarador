@@ -16,7 +16,6 @@ import kotlin.math.roundToInt
 /**
  * OCR neuronal íntegrament al dispositiu. El SDK i els models ONNX s'inclouen a l'APK.
  * No transmetem fotografies, imatges ni text reconegut a serveis externs.
- *
  * Es crea un motor per lectura i s'allibera fins i tot si es cancel·la la corrutina.
  */
 object PaddleReceiptOcr {
@@ -51,8 +50,8 @@ object PaddleReceiptOcr {
     private fun decodePhoto(context: Context, uri: Uri): Bitmap {
         val resolver = context.contentResolver
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        resolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
-            ?: error("No es pot obrir la imatge")
+        val boundsStream = resolver.openInputStream(uri) ?: error("No es pot obrir la imatge")
+        boundsStream.use { BitmapFactory.decodeStream(it, null, bounds) }
         require(bounds.outWidth > 0 && bounds.outHeight > 0) { "Imatge no vàlida" }
         var sample = 1
         while (maxOf(bounds.outWidth, bounds.outHeight) / sample > 2800) sample *= 2
