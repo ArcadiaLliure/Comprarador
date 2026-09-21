@@ -13,7 +13,7 @@
     <string name="scan_save">Guardar la compra</string>
     <string name="scan_saved">Compra guardada nel dispositivu.</string>
     <string name="scan_error">Nun se pudo guardar: %1$s</string>
-    <string name="scan_invalid">Revise'l nome, el preciu y la cantidá de los artículos.</string>
+    <string name="scan_invalid">Revise’l nome, el preciu y la cantidá de los artículos.</string>
     <string name="scan_summary">Equivalencies: %1$d/%2$d · Güei: %3$s · 2003: %4$s · Guardiella: %5$s</string>
     <string name="scan_back">← Volver al tique</string>
 </resources>
