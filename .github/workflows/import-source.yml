@@ -72,3 +72,4 @@ jobs:
             gh release create v0.1.2 Comprarador-v0.1.2.apk \
               --title 'Comprarador 0.1.2 · correcció OCR' \
               --notes 'Corregeix les línies de productes a pes, exclou els imports d’IVA, comprova el nombre d’articles i el total i permet afegir articles manualment. És un APK de depuració: la signatura pot ser diferent de la versió anterior; no la desinstal·leu sense protegir les dades locals.'
+          fi
