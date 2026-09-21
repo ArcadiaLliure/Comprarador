@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_review_ocr">Berrikusi ezagututako testua</string>
+    <string name="scan_reparse">Berriro aztertu</string>
+    <string name="scan_copy_ocr">Kopiatu testua</string>
+    <string name="scan_unverified">Ezin izan dira egiaztatu tiketako artikulu kopurua eta guztizkoa. Berrikusi artikulu guztiak gorde aurretik.</string>
+    <string name="scan_incomplete_title">Egiaztatu gabeko tiketa</string>
+    <string name="scan_incomplete_message">Artikulu kopurua edo guztizkoa ez dator bat tiketarekin, edo ezin izan da irakurri. Egiaztatu produkturik falta ez dela gorde aurretik.</string>
+    <string name="scan_save_anyway">Gorde hala ere</string>
+</resources>
