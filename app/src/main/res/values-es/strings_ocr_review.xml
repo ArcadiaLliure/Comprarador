@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_review_ocr">Revisar texto reconocido</string>
+    <string name="scan_reparse">Volver a analizar</string>
+    <string name="scan_copy_ocr">Copiar texto</string>
+    <string name="scan_unverified">No se han podido verificar la cantidad de artículos y el total del tique. Revise todos los artículos antes de guardar.</string>
+    <string name="scan_incomplete_title">Tique sin verificar</string>
+    <string name="scan_incomplete_message">La cantidad de artículos o el total no coincide con el tique, o no se ha podido reconocer. Compruebe que no falte ningún producto antes de guardar.</string>
+    <string name="scan_save_anyway">Guardar de todos modos</string>
+</resources>
