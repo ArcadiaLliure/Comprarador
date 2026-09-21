@@ -23,6 +23,9 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -212,14 +215,33 @@ class ScanReceiptActivity : ComponentActivity() {
         }
     }
 
+    /** PaddleOCR és el motor principal; ML Kit només s'usa com a reserva visible. */
     private fun recognize(uri: Uri) {
         saved = false
         showMessage(getString(R.string.ocr_running))
+        lifecycleScope.launch {
+            try {
+                ocrText = PaddleReceiptOcr.recognize(this@ScanReceiptActivity, uri)
+                rawButton.visibility = View.VISIBLE
+                android.widget.Toast.makeText(this@ScanReceiptActivity,
+                    getString(R.string.ocr_paddle_active), android.widget.Toast.LENGTH_SHORT).show()
+                val parsed = ReceiptParser.parseDetailed(ocrText)
+                showRows(parsed.lines, parsed)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                android.widget.Toast.makeText(this@ScanReceiptActivity,
+                    getString(R.string.ocr_paddle_fallback, e.message.orEmpty()),
+                    android.widget.Toast.LENGTH_LONG).show()
+                recognizeWithMlKit(uri)
+            }
+        }
+    }
+
+    private fun recognizeWithMlKit(uri: Uri) {
         try {
             recognizer.process(InputImage.fromFilePath(this, uri))
                 .addOnSuccessListener { result ->
-                    // ML Kit ordena blocs, no necessàriament les línies del tiquet.
-                    // Recuperem files de les coordenades de les línies, sense inferir dades.
                     val segments = result.textBlocks.flatMap { it.lines }.mapNotNull { line ->
                         line.boundingBox?.let { rect -> ReceiptTextSegment(
                             line.text, rect.left, rect.top, rect.right, rect.bottom

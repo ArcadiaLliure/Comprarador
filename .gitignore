@@ -11,3 +11,5 @@ __pycache__/
 /data/original/*.csv
 !/data/original/.gitkeep
 /data/rejects.jsonl
+# Pesos neuronals: s'incorporen a l'APK en compilar; no es pugen al repositori.
+/ppocr-sdk/src/main/assets/models/

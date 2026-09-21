@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Comprarador"
 include(":app")
+include(":ppocr-sdk")
