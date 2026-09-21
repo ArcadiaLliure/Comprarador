@@ -11,12 +11,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Integrar i publicar el codi de la versió 0.1
+        if: github.event_name == 'push' && hashFiles('tools/upgrade_v01.py') != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          sed -i 's/if new in text:/if new and new in text:/' tools/upgrade_v01.py
+          python tools/upgrade_v01.py
+          python -m unittest discover -s tests -v
+          git diff --check
+          git config user.name 'Manel'
+          git config user.email 'Arcadialliure@outlook.com'
+          git add README.md app tests tools/upgrade_v01.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'Incorporar Top compres, gràfics i nova portada a la versió 0.1'
+            git push origin HEAD:main
+          fi
       - name: Normalitzar els catàlegs originals i executar les proves
         shell: bash
         run: |
@@ -51,6 +69,6 @@ jobs:
         run: gradle :app:assembleDebug --no-daemon --stacktrace
       - uses: actions/upload-artifact@v4
         with:
-          name: Comprarador-debug-apk
+          name: Comprarador-v0.1.0-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
