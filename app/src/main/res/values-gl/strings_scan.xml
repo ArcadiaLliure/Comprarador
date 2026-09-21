@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_ready">Apunte ao tícket e faga a fotografía.</string>
+    <string name="scan_results">Revise os artigos detectados, os prezos e as equivalencias antes de gardalos.</string>
+    <string name="scan_previous">Última compra: %1$s / %2$s</string>
+    <string name="scan_new">Sen ningunha compra anterior comparable</string>
+    <string name="scan_up">↗ +%1$s / %2$s</string>
+    <string name="scan_down">↘ −%1$s / %2$s</string>
+    <string name="scan_equal">= %1$s / %2$s</string>
+    <string name="scan_historic">Referencia de 2003: %1$s / %2$s</string>
+    <string name="scan_no_match">Sen equivalencia de 2003 confirmada</string>
+    <string name="scan_detail">Ver a evolución do prezo</string>
+    <string name="scan_save">Gardar a compra</string>
+    <string name="scan_saved">Compra gardada no dispositivo.</string>
+    <string name="scan_error">Non se puido gardar: %1$s</string>
+    <string name="scan_invalid">Revise o nome, o prezo e a cantidade dos artigos.</string>
+    <string name="scan_summary">Equivalencias: %1$d/%2$d · Hoxe: %3$s · 2003: %4$s · Petos: %5$s</string>
+    <string name="scan_back">← Volver ao tícket</string>
+</resources>
