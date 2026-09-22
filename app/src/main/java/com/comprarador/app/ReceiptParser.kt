@@ -30,6 +30,9 @@ data class ReceiptParseResult(
  */
 object ReceiptParser {
     private val spaces = Regex("\\s+")
+    // Alguns OCR separen la coma del preu: «0, 15» en lloc de «0,15».
+    // Només reparem una coma després d'un dígit i seguida de DOS decimals.
+    private val brokenDecimal = Regex("(?<=\\d),\\s+(?=\\d{2}(?:\\s|$))")
     private val totalWords = Regex("(?iu)^(?:TOTAL|SUBTOTAL|IMPORTE|CANVI|CAMBIO|EFECTIU|EFECTIVO|TARGETA|TARJETA|IVA|DESCOMPTE|DESCUENTO|DTO|AHORRO|ESTALVI|REDONDEO|CUPON|CUPÓ|PAGO|PAGAMENT|VISA|MASTERCARD)\\b")
     private val receiptTotal = Regex("(?iu)^ART[IÍ]CLES?\\s+(\\d{1,3})\\s+TOTAL(?:\\s+EUROS?)?\\s+(\\d{1,6}[.,]\\d{2})\\b")
     private val endOfItems = Regex("(?iu)^(?:ART[IÍ]CLES?\\s+\\d+\\s+TOTAL|TOTAL(?:\\s+EUROS?)?\\b|SUBTOTAL\\b|TARGETA\\b|TARJETA\\b|DESGLOS(?:SAMENT)?\\b|DESGLOSE\\b|DESGLOSSAMENT\\b|BASE\\s+(?:%\\s*)?IVA\\b|IVA\\b|FORMA\\s+DE\\s+PAGAMENT\\b)")
@@ -39,11 +42,11 @@ object ReceiptParser {
     private val trailingAmount = Regex("^(.+?)\\s+(-?\\d{1,5}[.,]\\d{2})\\s*€?$")
     private val amountOnly = Regex("^(\\d{1,5}[.,]\\d{2})\\s*€?$")
     private val itemPrefix = Regex("(?iu)^\\s*(\\d{1,3})\\s*(?:un|ud|u)\\.?\\s*(?:[x×]\\s*)?")
-    // En tiquets SPAR, el preu per kg és una línia pròpia sota el nom: 0,650 Kg. X1,90 1,24.
-    private val weightLine = Regex("(?iu)^\\s*(\\d+(?:[.,]\\d{1,3})?)\\s*(kg|g|gr|l|cl|ml)\\.?\\s*[x×*]\\s*(\\d{1,5}[.,]\\d{2})\\s+(\\d{1,5}[.,]\\d{2})\\s*€?$")
-    // 185G en un nom comercial és el format de l'envàs, NO 0,185 kg comprats a granel.
+    // L'OCR pot llegir «Kg,» a la ratlla del pes en lloc de «Kg.».
+    private val weightLine = Regex("(?iu)^\\s*(\\d+(?:[.,]\\d{1,3})?)\\s*(kg|g|gr|l|cl|ml)[.,]?\\s*[x×*]\\s*(\\d{1,5}[.,]\\d{2})\\s+(\\d{1,5}[.,]\\d{2})\\s*€?$")
+    // 185G en un nom comercial és l'envàs, no pas el pes d'un producte a granel.
     private val inlineLooseMeasure = Regex("(?iu)(?:^|\\s)(\\d+(?:[.,]\\d{1,3})?)\\s+(kg|l)\\.?$")
-    private val inlineWeightLine = Regex("(?iu)^(.+?)\\s+(\\d+(?:[.,]\\d{1,3})?)\\s*(kg|g|gr|l|cl|ml)\\.?\\s*[x×*]\\s*(\\d{1,5}[.,]\\d{2})\\s+(\\d{1,5}[.,]\\d{2})\\s*€?$")
+    private val inlineWeightLine = Regex("(?iu)^(.+?)\\s+(\\d+(?:[.,]\\d{1,3})?)\\s*(kg|g|gr|l|cl|ml)[.,]?\\s*[x×*]\\s*(\\d{1,5}[.,]\\d{2})\\s+(\\d{1,5}[.,]\\d{2})\\s*€?$")
     private val hasLetters = Regex("\\p{L}")
 
     fun parse(text: String): List<ReceiptLine> = parseDetailed(text).lines
@@ -57,7 +60,7 @@ object ReceiptParser {
         var sectionStarted = false
 
         for (raw in text.lineSequence()) {
-            val line = raw.trim().replace(spaces, " ")
+            val line = raw.trim().replace(spaces, " ").replace(brokenDecimal, ",")
             if (line.isEmpty() || separator.matches(line)) continue
             val total = receiptTotal.find(line)
             if (total != null) {
