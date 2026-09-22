@@ -75,23 +75,23 @@ jobs:
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: Comprarador-v0.1.4-debug
+          name: Comprarador-v0.1.5-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-      - name: Etiquetar i publicar la versió 0.1.4
+      - name: Etiquetar i publicar la versió 0.1.5
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if ! git ls-remote --exit-code --tags origin refs/tags/v0.1.4 > /dev/null 2>&1; then
-            git -c user.name='Arcàdia Lliure' -c user.email='Arcadialliure@outlook.com' tag -a v0.1.4 -m 'Comprarador 0.1.4'
-            git push origin refs/tags/v0.1.4
+          if ! git ls-remote --exit-code --tags origin refs/tags/v0.1.5 > /dev/null 2>&1; then
+            git -c user.name='Arcàdia Lliure' -c user.email='Arcadialliure@outlook.com' tag -a v0.1.5 -m 'Comprarador 0.1.5'
+            git push origin refs/tags/v0.1.5
           fi
-          if ! gh release view v0.1.4 > /dev/null 2>&1; then
-            cp app/build/outputs/apk/debug/app-debug.apk Comprarador-v0.1.4.apk
-            gh release create v0.1.4 Comprarador-v0.1.4.apk \
-              --title 'Comprarador 0.1.4 · OCR neuronal local' \
-              --notes 'PaddleOCR PP-OCRv6_small és el motor principal, amb els models ONNX dins de l’APK i reserva local de ML Kit quan hi ha un error. Manté la revisió del text i la verificació del total del tiquet. Android 8.0 o posterior. APK de depuració: no desinstal·leu versions anteriors amb dades sense una còpia de seguretat.'
+          if ! gh release view v0.1.5 > /dev/null 2>&1; then
+            cp app/build/outputs/apk/debug/app-debug.apk Comprarador-v0.1.5.apk
+            gh release create v0.1.5 Comprarador-v0.1.5.apk \
+              --title 'Comprarador 0.1.5 · correcció del tiquet SPAR' \
+              --notes 'El parser ara tolera imports amb coma separada i «Kg,» en lloc de «Kg.». Prova de regressió amb els vuit articles llegits realment: suma de 13,80 € i patata i préssec associats als seus pesos. El reconeixement del nom comercial encara pot requerir revisió manual. PaddleOCR i els models són locals. APK de depuració: preserveu les dades abans de desinstal·lar.'
           fi
