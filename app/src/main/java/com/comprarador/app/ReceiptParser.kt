@@ -138,10 +138,11 @@ object ReceiptParser {
                 continue
             }
 
-            // Un nom sense preu pot correspondre a l'article a pes de la línia següent.
-            // Només acceptem aquest estat quan ja s'ha començat la secció d'articles.
+            // L'article a granel pot ser el PRIMER producte reconegut si manca la
+            // línia anterior. Guardem el nom, però només el convertim en article
+            // quan trobem un import o una línia de pes: no inventem cap compra.
             val (name, count) = stripItemPrefix(line)
-            if (sectionStarted && validProductName(name)) {
+            if (validProductName(name)) {
                 pendingName = name
                 pendingCount = count
             }
